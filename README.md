@@ -13,7 +13,7 @@ Ling Zi Xuan
 ```
 const hotelApp = require("./LingZiXuan_HotelMgmt.js");
 ```
-5. Add any functions you want to use into your new .js file. Functions are listed in the Functions section.
+5. Add any functions you want to use into your new .js file. Available functions are listed in the Functions section further down.
 6. **With `<filename>` being the name of your .js file**, <br>Run the below command in the terminal:
 ```
 node <filename>.js
