@@ -5,7 +5,9 @@ module.exports = {
     ],
     staffList:[
         {staffNumber:1,staffName:"Lumine Viator",staffRole:"Manager"},
-        {staffNumber:1,staffName:"Aether Viator",staffRole:"Vice Manager"}
+        {staffNumber:2,staffName:"Aether Viator",staffRole:"Vice Manager"},
+        {staffNumber:3,staffName:"Vulpes Stellar",staffRole:"Front Desk"},
+        {staffNumber:4,staffName:"Deid Mann",staffRole:"Janitor"}
     ],
 
     //Adds a room to the list of Rooms.
@@ -40,7 +42,8 @@ module.exports = {
         }
     },
     
-    //Retrieves the list of Rooms in roomList. The roomType parameter is an optional, case-insensitive parameter that if a room type is included as a String (e.g. getRooms("Presidential Suite") ), it will only retrieve the rooms of that type.
+    //Retrieves the list of Rooms in roomList.
+    //The roomType parameter is an optional, case-insensitive parameter that if a room type is included as a String (e.g. getRooms("Presidential Suite") ), it will only retrieve the rooms of that type.
     getAllRooms(roomType) {
         if (roomType == undefined || roomType == "") {  //lists all rooms
         this.roomList.forEach(room => console.log(
@@ -61,6 +64,7 @@ module.exports = {
     },
 
     //Change the status of the room (e.g. "Available" to "Occupied")
+    //Parameter roomStatus should be of type String
     changeRoomStatus(roomCode,roomStatus) {
         var code;
         for (var i=0; i<this.roomList.length; i++) {    //retrieves room using code
@@ -86,7 +90,8 @@ module.exports = {
         }
     },
 
-    //Retrieves the list of available Rooms in roomList. The roomType parameter is an optional, case-insensitive parameter that if a room type is included as a String (e.g. getAvailableRooms("Presidential Suite") ), it will only retrieve available the rooms of that type.
+    //Retrieves the list of available Rooms in roomList.
+    //The roomType parameter is an optional, case-insensitive parameter that if a room type is included as a String (e.g. getAvailableRooms("Presidential Suite") ), it will only retrieve available the rooms of that type.
     getAvailableRooms(roomType) {
         if (roomType == undefined || roomType == "") {  //lists all available rooms
             this.roomList.filter(room => room.roomStatus == "Available").forEach(room => console.log(
@@ -119,9 +124,9 @@ module.exports = {
             console.log(`Room using code \"${roomCode}\" not found. \n=====`)
         }
         else {
-            console.log(`Room using code \"${roomCode}\" found. \nDetails:`)
+            console.log(`Room using code \"${roomCode}\" found.`)
             console.log(
-                `Room Code: ${code.roomCode} \nRoom Type: ${code.roomType} \nRoom Status: ${code.roomStatus} \n=====`
+                `Details: \nRoom Type: ${code.roomType} \nRoom Status: ${code.roomStatus} \n=====`
             )
         }
     },
@@ -155,19 +160,82 @@ module.exports = {
         if (staffNumber == undefined) {   //checks if required values were included
             console.log("Please include a staffNumber \n=====");
         }
-        else if (typeof staffName === "string" && typeof staffRole === "string") {    //checks if roomType is a String
-            var staffNumber = this.staffList[this.staffList.length - 1].staffNumber + 1 //auto increment for staff number
-            this.staffList.push({staffNumber,staffName,staffRole})
-            var latest = this.staffList[this.staffList.length - 1].staffNumber
-            if (latest == staffNumber) {    //checks if staff was added successfully by comparing newest staff number
-                console.log(`Staff ${staffName} has been added successfully. \n${staffName}\'s staff number is ${staffNumber} \n${staffName}\'s job is ${staffRole} \n=====`)
+        else if (typeof staffNumber === "number") {    //checks if roomType is a String
+            const staff = this.staffList.find(s => s.staffNumber == staffNumber)
+            const index = this.staffList.findIndex(s => s.staffNumber == staffNumber)
+            if (staff != undefined) {    //if staff exists
+                this.staffList.splice(index,1)
+                console.log(`Staff ${staff.staffName} has been removed successfully \n=====`)
             }
             else {
-                console.log("An error occured. Staff was not added. \n=====");
+                console.log(`Staff number ${staffNumber} does not exist. \n=====`);
             }
         }
         else {
-            console.log("Staff name or role is not in correct format. Both should be included as String. \n=====")
+            console.log("Staff number is not in correct format. Should be included as Number. \n=====")
+        }
+    },
+
+    //Used to change the role of staff (e.g. "Manager" to "Senior Manager")
+    //Parameter staffNumber should be a Number
+    //Parameter staffRole should be a String
+    changeStaffRole(staffNumber,staffRole) {
+        if (typeof staffNumber === "number" && typeof staffRole === "string") {  //checks if given staffRole is a String
+            const staff = this.staffList.find(s => s.staffNumber == staffNumber);
+            if (staff != undefined) {    //if staff exists
+                staff.staffRole = staffRole
+                console.log(`Staff ${staff.staffName}\'s job has been changed to ${staffRole} \n=====`)
+            }
+            else if (staff.staffRole.toLowerCase() == staffRole.toLowerCase()) {
+                console.log(`Staff ${staff.staffName}\'s is already a \"${staffRole}\". \n=====`)
+            }
+            else {
+                console.log(`Staff number ${staffNumber} not found. \n=====`)
+            }
+        }
+        else {
+            console.log("Staff number or role is not in correct format. \nStaff number should be included as Number. \nStaff role should be included as String \n=====")
+        }
+    },
+
+    //Retrieves the list of Staff in staffList.
+    //The staffRole parameter is an optional, case-insensitive parameter that if a staff role is included as a String (e.g. getAllStaff("Vice Manager") ), it will only retrieve staff with that job.
+    getAllStaff(staffRole) {
+        if (staffRole == undefined || staffRole == "") {  //lists all staff
+            this.staffList.forEach(staff => console.log(
+                `Staff Number: ${staff.staffNumber} \nStaff Name: ${staff.staffName} \nStaff Job: ${staff.staffRole} \n=====`
+            ))
+        }
+        else {  //lists all staff of given staffRole
+                var staffByRole = this.staffList.filter(staff => staff.staffRole.toLowerCase() == staffRole.toLowerCase())
+                if (staffByRole.length == 0) {
+                    console.log("There are no staff with the entered job. \n=====")
+                }
+                else {
+                    staffByRole.forEach(staff => console.log(
+                        `Staff Number: ${staff.staffNumber} \nStaff Name: ${staff.staffName} \nStaff Job: ${staff.staffRole} \n=====`
+                    ));
+                }
+        }
+    },
+
+    //Retrieves the staff details of the specified staff
+    getStaff(staffNumber) {
+        var staff;
+        for (var i=0; i<this.staffList.length; i++) {    //retrieves staff using number
+            if (this.staffList[i].staffNumber==staffNumber) {
+                staff = this.staffList.find(staff => staff.staffNumber == staffNumber)
+                break;
+            }
+        }
+        if (staff==null) {   //checks if staff using given staff number exists
+            console.log(`Staff with number ${staffNumber} was not found. \n=====`)
+        }
+        else {
+            console.log(`Staff with number ${staffNumber} found.`)
+            console.log(
+                `Details: \nStaff Name: ${staff.staffName} \nStaff Job: ${staff.staffRole} \n=====`
+            )
         }
     },
 }
