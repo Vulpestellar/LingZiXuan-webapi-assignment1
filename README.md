@@ -1,24 +1,88 @@
 # Assignment 1 - Hotel Management
 Ling Zi Xuan
 
-## Setup
-> [!NOTE]
+## How To Use
+> [!IMPORTANT]
 > Node.js is required for this to run. <br>
 > If you do not have it, please install Node.js
 
-1. Create a .js file. The name should not matter.
-2. Place
-3. Add the line below into your new .js file.
-    >const hotelApp = require("./LingZiXuan_HotelMgmt.js")
+1. Download the file `LingZiXuan_HotelMgmt.js` and place it into a folder.
+2. Create a .js file. The name should not matter.
+3. Place your new .js file into the same folder as LingZiXuan_HotelMgmt.js
+4. Add the line below into your new .js file:
+```
+const hotelApp = require("./LingZiXuan_HotelMgmt.js");
+```
+5. Add any functions you want to use into your new .js file. Functions are listed in the Functions section.
+6. **With `<filename>` being the name of your .js file**, <br>Run the below command in the terminal:
+```
+node <filename>.js
+```
 
-You will only need one file, ie, your node module, for this assignment.
+## Functions
+Below is a list of all the functions available in LingZiXuan_HotelMgmt.js, as well as the required datatypes of the parameters.
 
-In this readme file, describe how to use your node module. It could be similar to **app.js** from Lab2, where you call some functions in your node module and display the output. Describe how to setup your node module, if any. Describe how to call the functions, what parameters required and so on.
+> [!NOTE]
+> The functions can be called directly from your .js file. <br>
+> For example:
+> ```
+> hotelApp.addRoom("PS11","Presidential Suite");
+> ```
+> To add a room to the list of rooms
 
-You can press **Ctrl+Shift+V** in this file in Visual Studio Code to see a live preview of the readme file.
+### addRoom(roomCode,roomType)
+**roomCode: String** <br>
+**roomType: String**
+<p>This function adds a room to the room list. <br>
+The room code cannot be the same as an existing room code.</p>
 
-For some tips in formatting text in readme file, refer to https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+### getAllRooms(roomType)
+**roomType: String** (Optional, case-insensitive)
+<p>This function retrieves the details of all rooms in the room list.
+The parameter "roomType" is an optional parameter that allows the user to
+retrieve the details of all rooms of only the specified room type.</p>
 
+### changeRoomStatus(roomCode,roomStatus)
+**roomCode: String** <br>
+**roomStatus: String**
+<p>This function allows changing of room status. <br>
+Examples of room status: "Available", "Occupied", "Cleaning".</p>
+
+### getAvailableRooms(roomType)
+**roomType: String** (Optional, case-insensitive)
+<p>This function retrieves the details of all rooms with the "Available" status in the room list.
+The parameter "roomType" is an optional parameter that allows the user to
+retrieve the details of all available rooms of only the specified room type.</p>
+
+### getRoom(roomCode)
+**roomCode: String**
+<p>This function retrieves the details of the room of the specified room code</p>
+
+### addStaff(staffName,staffRole)
+**staffName: String** <br>
+**staffRole: String**
+<p>This function adds a staff to the staff list. <br>
+The staff number auto-increments and thus does not need to be specified.</p>
+
+### removeStaff(staffNumber)
+**staffNumber: number**
+<p>This function removes the staff member that has the specified staffNumber from the staff list.</p>
+
+### changeStaffRole(staffNumber,staffRole)
+**staffNumber: number** <br>
+**staffRole: String** (Case-insensitive)
+<p>This function allows changing of staff roles. <br>
+Examples of staff roles: "Senior Manager", "Front Desk", "Janitor".</p>
+
+### getAllStaff(staffRole)
+**staffRole: String** (Optional, case-insensitive)
+<p>This function retrieves the details of all staff in the staff list.
+The parameter "staffRole" is an optional parameter that allows the user to
+retrieve the details of all staff of only the specified staff role.</p>
+
+### getStaff(staffNumber)
+**staffNumber: number**
+<p>This function retrieves the details of the staff of the specified staff number</p>
 
 # References
 Provide the references that you have used to support your assignment.
